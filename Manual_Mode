@@ -1,0 +1,56 @@
+//Manual Mode
+
+#define l_ailPin 2
+#define r_ailPin 3
+#define thrtPin 4
+#define elevPin 5
+#define ruddPin 6
+#define chan1Pin A0
+#define chan2Pin A1
+#define chan3Pin A2
+#define chan4Pin A3
+
+#include <Servo.h>
+
+int chan1 = 0; //rx_ail
+int chan2 = 0; //rx_thro
+int chan3 = 0; //rx_elev
+int chan4 = 0; //rx_rudd
+int al, tr, el, rd; //servo angle
+
+Servo l_ail;
+Servo r_ail;
+Servo thrt;
+Servo elev;
+Servo rudd;
+
+void setup() {
+ Serial.begin(9600);
+
+ pinMode(chan1Pin, INPUT);
+ pinMode(chan2Pin, INPUT);
+ pinMode(chan3Pin, INPUT);
+ pinMode(chan4Pin, INPUT);
+
+ l_ail.attach(l_ailPin);
+ r_ail.attach(r_ailPin);
+ thrt.attach(thrtPin);
+ elev.attach(elevPin);
+ rudd.attach(ruddPin);
+}
+
+void loop(){
+ chan1 = pulseIn(chan1Pin,HIGH,20000);
+ chan2 = pulseIn(chan2Pin,HIGH,20000);
+ chan3 = pulseIn(chan3Pin,HIGH,20000);
+ chan4 = pulseIn(chan4Pin,HIGH,20000);
+ al = map(chan1,1090,1500,0,90);
+ tr = map(chan2,1090,1500,60,100);
+ el = map(chan1,1090,1500,0,90);
+ rd = map(chan2,1090,1500,0,90);	
+
+ l_ail.write(al);
+ r_ail.write(al);
+ thrt.write(tr);
+ rudd.write(rd);
+}
